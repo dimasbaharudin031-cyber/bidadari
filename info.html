@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantai Bidadari - Info Wisata</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body { background: #f4fafd; }
+    header {
+      position: fixed; top: 0; width: 100%; background: rgba(0, 70, 95, 0.92); backdrop-filter: blur(8px);
+      padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+    }
+    header h1 { color: white; font-size: 1.7rem; }
+    nav a { color: #f0f9ff; text-decoration: none; margin-left: 26px; font-weight: 600; }
+    nav a:hover, nav a.active { color: #ffdd77; border-bottom: 2px solid #ffdd77; padding-bottom: 4px; }
+    .page-header { background: linear-gradient(135deg, #0c6b7c, #1797aa); padding: 120px 32px 60px; text-align: center; color: white; }
+    .info-container { max-width: 1100px; margin: 60px auto; padding: 0 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+    .info-card { background: white; border-radius: 32px; padding: 30px; box-shadow: 0 12px 25px rgba(0,0,0,0.08); }
+    .info-card h3 { color: #0f5e6e; font-size: 1.7rem; margin-bottom: 20px; border-left: 5px solid #ffcd5c; padding-left: 16px; }
+    .info-card ul { margin-left: 20px; margin-top: 10px; }
+    .info-card li { margin: 10px 0; line-height: 1.5; }
+    footer { background: #044e5c; color: #cde7ed; text-align: center; padding: 24px; margin-top: 40px; }
+    @media (max-width: 760px) {
+      header { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏝️ Pantai Bidadari</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="galeri.html">Galeri</a>
+      <a href="info.html" class="active">Info</a>
+      <a href="reservasi.html">Reservasi</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+  </header>
+
+  <div class="page-header">
+    <h2>Informasi Wisata Lengkap</h2>
+    <p>Semua yang perlu Anda tahu sebelum berkunjung</p>
+  </div>
+
+  <div class="info-container">
+    <div class="info-card">
+      <h3>🕒 Jam Operasional</h3>
+      <ul>
+        <li>Setiap hari: 08.00 – 18.00 WIB</li>
+        <li>Libur nasional & akhir pekan: tetap buka</li>
+        <li>Kamar mandi & mushola tersedia</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>💰 Harga Tiket</h3>
+      <ul>
+        <li>Wisatawan domestik: Rp15.000/orang</li>
+        <li>Wisatawan asing: Rp30.000/orang</li>
+        <li>Parkir motor: Rp5.000, mobil: Rp10.000</li>
+        <li>Anak di bawah 5 tahun: gratis</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>🎯 Aktivitas Menarik</h3>
+      <ul>
+        <li>Berenang & bermain pasir</li>
+        <li>Snorkeling (penyewaan alat Rp50.000)</li>
+        <li>Bermain banana boat</li>
+        <li>Foto prewedding / spot sunset</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>🍽️ Fasilitas & Kuliner</h3>
+      <ul>
+        <li>Warung makan seafood & masakan khas</li>
+        <li>Gazebo & area bilas</li>
+        <li>Persewaan pelampung / kaca mata renang</li>
+        <li>Toilet bersih & tempat sampah terpilah</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Pantai Bidadari — Alam Lestari, Wisata Berkelanjutan</p>
+  </footer>
+  
+</body>
+</html>

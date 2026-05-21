@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Pantai Bidadari - Beranda Dinamis</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      scroll-behavior: smooth;
+    }
+    body {
+      background: #f4fafd;
+      color: #1f2f3e;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    /* Header dengan hamburger */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 70, 95, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    header h1 {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    /* Desktop nav */
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      transition: all 0.3s;
+    }
+    .nav-links a {
+      color: #f0f9ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+      font-size: 1rem;
+      white-space: nowrap;
+      padding: 5px 0;
+      display: inline-block;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: #ffdd77;
+      border-bottom: 2px solid #ffdd77;
+      padding-bottom: 3px;
+    }
+    /* Tombol hamburger (mobile) */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      cursor: pointer;
+      z-index: 1100;
+    }
+    .menu-toggle span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: white;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    /* Animasi hamburger jadi X */
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 6px);
+    }
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -6px);
+    }
+    /* Hero section */
+    .hero {
+      height: 100vh;
+      min-height: 600px;
+      background: linear-gradient(rgba(0, 40, 55, 0.5), rgba(0, 30, 45, 0.7)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 0 20px;
+    }
+    .hero-content h2 {
+      font-size: clamp(2rem, 8vw, 3.8rem);
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 14px rgba(0,0,0,0.5);
+      animation: fadeInUp 0.8s ease;
+    }
+    .hero-content p {
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      opacity: 0.95;
+      animation: fadeInUp 0.8s ease 0.1s both;
+    }
+    .btn {
+      display: inline-block;
+      background: #ffcd5c;
+      color: #04596b;
+      padding: 12px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+    .btn:hover {
+      background: #ffbc2c;
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    /* Section umum */
+    section {
+      padding: 80px 24px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+      margin-bottom: 12px;
+      color: #0c6b7c;
+      font-weight: 600;
+    }
+    /* About grid responsif */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .about img {
+      width: 100%;
+      border-radius: 32px;
+      box-shadow: 0 20px 30px rgba(0,0,0,0.12);
+      transition: transform 0.4s ease;
+    }
+    .about img:hover {
+      transform: scale(1.02);
+    }
+    .about-text h3 {
+      font-size: clamp(1.4rem, 5vw, 1.9rem);
+      color: #0f5e6e;
+      margin-bottom: 16px;
+    }
+    /* Info cards */
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .card {
+      background: white;
+      padding: 28px 20px;
+      border-radius: 32px;
+      text-align: center;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 35px rgba(0,0,0,0.1);
+    }
+    .card h4 {
+      color: #116b7e;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+    /* Contact box */
+    .contact-box {
+      background: linear-gradient(130deg, #116b7e, #1f9aaf);
+      color: white;
+      padding: 40px 24px;
+      border-radius: 48px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .contact-box:hover {
+      transform: scale(1.01);
+    }
+    footer {
+      background: #044e5c;
+      color: #cde7ed;
+      text-align: center;
+      padding: 24px;
+      font-size: 0.9rem;
+    }
+    /* Animasi keyframes */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Responsive Mobile */
+    @media (max-width: 768px) {
+      header {
+        padding: 12px 20px;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        max-width: 280px;
+        height: 100vh;
+        background: rgba(0, 70, 95, 0.97);
+        backdrop-filter: blur(16px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+        z-index: 1050;
+      }
+      .nav-links.active {
+        right: 0;
+      }
+      .nav-links a {
+        font-size: 1.3rem;
+        padding: 12px 0;
+        width: 100%;
+        text-align: center;
+      }
+      .about {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      section {
+        padding: 60px 20px;
+      }
+      .hero-content h2 {
+        font-size: 2.2rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .info-cards {
+        grid-template-columns: 1fr;
+      }
+      .btn {
+        padding: 10px 24px;
+        font-size: 0.9rem;
+      }
+    }
+    /* Overlay saat menu terbuka - TANPA BLUR */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1040;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏝️ Pantai Bidadari</h1>
+    <div class="menu-toggle" id="mobile-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav class="nav-links" id="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="galeri.html">Galeri</a>
+      <a href="info.html">Info</a>
+      <a href="reservasi.html">Reservasi</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+  </header>
+  <div class="overlay" id="overlay"></div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Selamat Datang di Pantai Bidadari</h2>
+      <p>Pasir putih, sunset magis, dan pengalaman tak terlupakan. Pesan tempat untuk liburan impianmu!</p>
+      <a href="reservasi.html" class="btn">✧ Reservasi Sekarang ✧</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">Tentang Pantai</h2>
+      <div class="about">
+        <img src="FOTO/35..jpeg" alt="Pantai Bidadari" loading="lazy">
+        <div class="about-text">
+          <h3>Surga Tersembunyi di Tanggamus</h3>
+          <p>Pantai Bidadari menyuguhkan hamparan pasir putih yang lembut, air laut biru kehijauan, serta deburan ombak yang menenangkan. Cocok untuk liburan keluarga, gathering, atau me time.</p>
+          <p>Nikmati juga kuliner laut segar, spot foto estetik, dan keramahan penduduk lokal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="info">
+    <div class="container">
+      <h2 class="section-title">Info Wisata</h2>
+      <div class="info-cards">
+        <div class="card"><h4>🏖️ Pasir Putih</h4><p>Area luas & bersih untuk bersantai.</p></div>
+        <div class="card"><h4>🌅 Sunset Eksotis</h4><p>Pemandangan matahari terbenam memukau.</p></div>
+        <div class="card"><h4>🦐 Kuliner Laut</h4><p>Ikan bakar, cumi, udang segar.</p></div>
+        <div class="card"><h4>📸 Spot Foto</h4><p>Instagramable dengan latar pantai.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="contact-box">
+        <h2>📞 Hubungi Kami</h2>
+        <p>✉️ info@pantaibidadari.com | 📞 +62 851-4277-7996</p>
+        <p>📍 Jl. Kartini, Putih, Kec. Cukuh Balak, Tanggamus, Lampung</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Pantai Bidadari — Pesona Alam yang Abadi. Nikmati versi mobile yang lebih nyaman.</p>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+    const overlay = document.getElementById('overlay');
+
+    function closeMenu() {
+      navLinks.classList.remove('active');
+      menuToggle.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openMenu() {
+      navLinks.classList.add('active');
+      menuToggle.classList.add('active');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    menuToggle.addEventListener('click', () => {
+      if (navLinks.classList.contains('active')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    overlay.addEventListener('click', closeMenu);
+
+    // ===== PERBAIKAN: navigasi pada menu mobile =====
+    // Ambil semua tautan di dalam .nav-links
+    const navLinksA = document.querySelectorAll('.nav-links a');
+    navLinksA.forEach(link => {
+      link.addEventListener('click', (e) => {
+        // Jika menu sedang terbuka (aktif), kita tutup menu terlebih dahulu
+        // lalu arahkan ke halaman yang dituju
+        if (navLinks.classList.contains('active')) {
+          e.preventDefault(); // cegah aksi default sementara
+          const targetUrl = link.getAttribute('href');
+          closeMenu(); // tutup menu dengan animasi
+          // beri sedikit jeda agar menu tertutup sempurna lalu pindah halaman
+          setTimeout(() => {
+            window.location.href = targetUrl;
+          }, 200); // 200ms cukup untuk animasi close menu
+        }
+        // Jika tidak dalam menu mobile (desktop), biarkan default (langsung pindah)
+      });
+    });
+
+    // Smooth scroll untuk anchor internal (jika ada)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId !== "#" && targetId !== "") {
+          const target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // Intersection Observer untuk animasi card saat muncul
+    const cards = document.querySelectorAll('.card, .about img, .contact-box');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+
+    cards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(25px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.5s ease';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>

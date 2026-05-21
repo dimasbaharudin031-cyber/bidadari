@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantai Bidadari - Reservasi Tiket via WhatsApp</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background: #f4fafd;
+      color: #1f2f3e;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 70, 95, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    header h1 {
+      color: white;
+      font-size: 1.7rem;
+    }
+    nav a {
+      color: #f0f9ff;
+      text-decoration: none;
+      margin-left: 26px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    nav a:hover,
+    nav a.active {
+      color: #ffdd77;
+      border-bottom: 2px solid #ffdd77;
+      padding-bottom: 4px;
+    }
+    .page-header {
+      background: linear-gradient(135deg, #0c6b7c, #1797aa);
+      padding: 120px 32px 60px;
+      text-align: center;
+      color: white;
+    }
+    .page-header h2 {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+    }
+    .reservasi-container {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 0 32px;
+    }
+    .form-card {
+      background: white;
+      border-radius: 32px;
+      padding: 40px 32px;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .input-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .input-field label {
+      font-weight: 700;
+      color: #0e5a6b;
+      font-size: 1rem;
+    }
+    .input-field input {
+      padding: 14px 18px;
+      border: 1px solid #cbdde4;
+      border-radius: 40px;
+      font-size: 1rem;
+      background: #fefefe;
+      transition: 0.2s;
+    }
+    .input-field input:focus {
+      outline: none;
+      border-color: #1ea0b5;
+      box-shadow: 0 0 0 3px rgba(30, 160, 181, 0.2);
+    }
+    .btn-wa {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      transition: 0.2s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .btn-wa:hover {
+      background: #128C7E;
+      transform: translateY(-2px);
+    }
+    .btn-reset {
+      background: #e2e8f0;
+      color: #1e5f6e;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 12px;
+    }
+    .info-note {
+      background: #e6f4f0;
+      border-radius: 24px;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #0e6b5e;
+      margin-top: 24px;
+    }
+    footer {
+      background: #044e5c;
+      color: #cde7ed;
+      text-align: center;
+      padding: 24px;
+      margin-top: 40px;
+    }
+    @media (max-width: 760px) {
+      header {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 16px;
+      }
+      nav a {
+        margin: 0 12px;
+        font-size: 0.85rem;
+      }
+      .page-header h2 {
+        font-size: 1.8rem;
+      }
+      .form-card {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏝️ Pantai Bidadari</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="galeri.html">Galeri</a>
+      <a href="info.html">Info</a>
+      <a href="reservasi.html" class="active">Reservasi</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+  </header>
+
+  <div class="page-header">
+    <h2>Reservasi Tiket via WhatsApp</h2>
+    <p>Isi data Anda, lalu klik tombol WhatsApp untuk mengirim pesan reservasi</p>
+  </div>
+
+  <div class="reservasi-container">
+    <div class="form-card">
+      <form id="reservationForm">
+        <div class="form-group">
+          <div class="input-field">
+            <label>Nama Lengkap *</label>
+            <input type="text" id="nama" placeholder="Contoh: Bunga Lestari" required>
+          </div>
+          <div class="input-field">
+            <label>Email *</label>
+            <input type="email" id="email" placeholder="email@contoh.com" required>
+          </div>
+          <div class="input-field">
+            <label>Tanggal Kunjungan *</label>
+            <input type="date" id="tanggal" required>
+          </div>
+          <div class="input-field">
+            <label>Jumlah Rombongan (orang) *</label>
+            <input type="number" id="rombongan" min="1" value="1" required>
+          </div>
+        </div>
+        <button type="button" id="sendWaBtn" class="btn-wa">
+          📱 Kirim Reservasi ke WhatsApp
+        </button>
+        <button type="button" id="resetBtn" class="btn-reset">
+          ↺ Reset Form
+        </button>
+      </form>
+      <div class="info-note">
+        💡 <strong>Cara simpel:</strong> Data akan dikirim via WhatsApp ke admin Pantai Bidadari (085142777996). 
+        Anda akan diarahkan ke aplikasi WhatsApp, cukup tekan "Kirim". Reservasi akan diproses oleh tim kami.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Pantai Bidadari — Reservasi mudah via WhatsApp, tanpa repot.</p>
+  </footer>
+
+  <script>
+    // Nomor WhatsApp tujuan: 085142777996 (format internasional)
+    const WA_NUMBER = "6285142777996";  // +62 851-4277-7996
+
+    const namaInput = document.getElementById('nama');
+    const emailInput = document.getElementById('email');
+    const tanggalInput = document.getElementById('tanggal');
+    const rombonganInput = document.getElementById('rombongan');
+    const sendBtn = document.getElementById('sendWaBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    function setMinDate() {
+      const today = new Date().toISOString().split('T')[0];
+      tanggalInput.setAttribute('min', today);
+      if (!tanggalInput.value) {
+        tanggalInput.value = today;
+      }
+    }
+
+    function resetForm() {
+      namaInput.value = '';
+      emailInput.value = '';
+      rombonganInput.value = '1';
+      const today = new Date().toISOString().split('T')[0];
+      tanggalInput.value = today;
+      [namaInput, emailInput, tanggalInput, rombonganInput].forEach(field => {
+        field.style.borderColor = '';
+      });
+    }
+
+    function validateForm() {
+      let isValid = true;
+      const nama = namaInput.value.trim();
+      const email = emailInput.value.trim();
+      const tanggal = tanggalInput.value;
+      const rombongan = parseInt(rombonganInput.value);
+
+      if (nama === '') {
+        alert('Nama lengkap harus diisi.');
+        namaInput.style.borderColor = '#dc8b7c';
+        isValid = false;
+      } else {
+        namaInput.style.borderColor = '';
+      }
+
+      if (email === '' || !email.includes('@') || !email.includes('.')) {
+        alert('Masukkan email yang valid (contoh: nama@domain.com).');
+        emailInput.style.borderColor = '#dc8b7c';
+        isValid = false;
+      } else {
+        emailInput.style.borderColor = '';
+      }
+
+      if (!tanggal) {
+        alert('Pilih tanggal kunjungan.');
+        tanggalInput.style.borderColor = '#dc8b7c';
+        isValid = false;
+      } else {
+        tanggalInput.style.borderColor = '';
+      }
+
+      if (isNaN(rombongan) || rombongan < 1) {
+        alert('Jumlah rombongan minimal 1 orang.');
+        rombonganInput.style.borderColor = '#dc8b7c';
+        isValid = false;
+      } else {
+        rombonganInput.style.borderColor = '';
+      }
+
+      return isValid;
+    }
+
+    function sendToWhatsApp() {
+      if (!validateForm()) return;
+
+      const nama = namaInput.value.trim();
+      const email = emailInput.value.trim();
+      const tanggal = tanggalInput.value;
+      const rombongan = rombonganInput.value;
+
+      const message = `*Reservasi Pantai Bidadari*%0A%0A*Nama:* ${encodeURIComponent(nama)}%0A*Email:* ${encodeURIComponent(email)}%0A*Tanggal Kunjungan:* ${tanggal}%0A*Jumlah Rombongan:* ${rombongan} orang%0A%0A_Halo, saya ingin melakukan reservasi tiket masuk. Mohon konfirmasi ketersediaan dan tiket. Terima kasih._`;
+
+      const waUrl = `https://wa.me/${WA_NUMBER}?text=${message}`;
+      window.open(waUrl, '_blank');
+    }
+
+    sendBtn.addEventListener('click', sendToWhatsApp);
+    resetBtn.addEventListener('click', resetForm);
+    setMinDate();
+  </script>
+</body>
+</html>
